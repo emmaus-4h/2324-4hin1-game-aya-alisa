@@ -63,10 +63,10 @@ var tekenAlles = function() {
   // kogel
 
   // speler
-  fill("white");
-  rect(spelerX - 25, spelerY - 25, 50, 50);
+  fill("yellow");
+  ellipse(spelerX - 25, spelerY - 25, 50, 50);
   fill("black");
-  ellipse(spelerX, spelerY, 10, 10);
+  ellipse(spelerX - 30, spelerY - 32, 10, 10);
 
   // punten en health
 
@@ -97,6 +97,8 @@ function setup() {
 function draw() {
   if (spelStatus === SPELEN) {
     beweegAlles();
+    background('blue')
+    spelerX = spelerX + 10
     verwerkBotsing();
     tekenAlles();
     if (health <= 0) {
