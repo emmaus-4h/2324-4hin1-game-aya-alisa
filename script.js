@@ -23,6 +23,9 @@ var spelerX = 600; // x-positie van speler
 var spelerY = 600; // y-positie van speler
 var health = 100;  // health van speler
 
+var vijandX = 600;
+var vijandY = 500;
+
 /* ********************************************* */
 /* functies die je gebruikt in je game           */
 /* ********************************************* */
@@ -32,8 +35,38 @@ var health = 100;  // health van speler
  */
 var beweegAlles = function() {
   // speler
+   if (keyIsDown(RIGHT_ARROW) ) {
+     spelerX = spelerX +5;
+   } 
+  
+  if (keyIsDown(LEFT_ARROW)){
+     spelerX = spelerX -5;
+   } 
+
+  if (keyIsDown(UP_ARROW)){
+     spelerY = spelerY -5;
+   } 
+  
+if (keyIsDown(DOWN_ARROW)){
+     spelerY = spelerY +5;
+   } 
 
   // vijand
+  if (keyIsDown(65) ) {
+     vijandX = vijandX +5;
+   } 
+  
+  if (keyIsDown(66)){
+     vijandX = vijandX -5;
+   } 
+
+  if (keyIsDown(67)){
+     vijandY = vijandY -5;
+   } 
+  
+if (keyIsDown(68)){
+     vijandY = vijandY +5;
+   } 
 
   // kogel
 };
@@ -59,6 +92,8 @@ var tekenAlles = function() {
   // achtergrond
 
   // vijand
+  fill('pink')
+  ellipse(vijandX - 25, vijandY - 25, 50, 50);
 
   // kogel
 
@@ -98,7 +133,9 @@ function draw() {
   if (spelStatus === SPELEN) {
     beweegAlles();
     background('blue')
-    spelerX = spelerX + 10
+
+   
+    
     verwerkBotsing();
     tekenAlles();
     if (health <= 0) {
