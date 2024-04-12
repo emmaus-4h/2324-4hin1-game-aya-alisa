@@ -51,16 +51,18 @@ if (keyIsDown(DOWN_ARROW)){
      spelerY = spelerY +5;
    } 
 
+  
+  
   // vijand
-  if (keyIsDown(65) ) {
+  if (keyIsDown(87) ) {
      vijandX = vijandX +5;
    } 
   
-  if (keyIsDown(66)){
+  if (keyIsDown(65)){
      vijandX = vijandX -5;
    } 
 
-  if (keyIsDown(67)){
+  if (keyIsDown(83)){
      vijandY = vijandY -5;
    } 
   
@@ -68,8 +70,28 @@ if (keyIsDown(68)){
      vijandY = vijandY +5;
    } 
 
-  // kogel
-};
+ 
+
+  var speed = 2.5
+
+  if(vijandX < spelerX) {
+    vijandX += speed;
+  }
+
+  else if (vijandX > spelerX) {
+    vijandX -= speed;
+  }
+
+  if (vijandY < spelerY) {
+    vijandY += speed;
+  }
+
+  else if (vijandY > spelerY) {
+    vijandY -= speed;
+  }
+    
+    // kogel
+}
 
 /**
  * Checkt botsingen
@@ -78,7 +100,13 @@ if (keyIsDown(68)){
  */
 var verwerkBotsing = function() {
   // botsing speler tegen vijand
-
+if (spelerX - vijandX < 50 &&
+   spelerX - vijandX >-50 &&
+   spelerY - vijandY < 50 &&
+   spelerY - vijandY > -50) {
+  console.log("Botsing");
+}
+  
   // botsing kogel tegen vijand
 
   // update punten en health
