@@ -11,6 +11,8 @@ https://p5js.org/reference/
 https://informatica.emmauscollege.nl/opdrachten/game/
 - cursus games programmeren (verdieping voor wie meer wil leren)
 https://cs50.harvard.edu/games/2018/
+- keycode
+https://www.toptal.com/developers/keycode
 
 ## Credits
 - Game template van het Emmauscollege Rotterdam <br>

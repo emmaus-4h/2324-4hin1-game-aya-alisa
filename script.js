@@ -17,6 +17,7 @@
 /* ********************************************* */
 const SPELEN = 1;
 const GAMEOVER = 2;
+const UITLEG = 3;
 var spelStatus = SPELEN;
 
 var spelerX = 600; // x-positie van speler
@@ -25,6 +26,7 @@ var health = 100;  // health van speler
 
 var vijandX = 600;
 var vijandY = 500;
+
 
 /* ********************************************* */
 /* functies die je gebruikt in je game           */
@@ -35,46 +37,29 @@ var vijandY = 500;
  */
 var beweegAlles = function() {
   // speler
-   if (keyIsDown(RIGHT_ARROW) ) {
-     spelerX = spelerX +5;
-   } 
-  
-  if (keyIsDown(LEFT_ARROW)){
-     spelerX = spelerX -5;
-   } 
+  if (keyIsDown(RIGHT_ARROW)) {
+    spelerX = spelerX + 5;
+  }
 
-  if (keyIsDown(UP_ARROW)){
-     spelerY = spelerY -5;
-   } 
-  
-if (keyIsDown(DOWN_ARROW)){
-     spelerY = spelerY +5;
-   } 
+  if (keyIsDown(LEFT_ARROW)) {
+    spelerX = spelerX - 5;
+  }
 
-  
-  
+  if (keyIsDown(UP_ARROW)) {
+    spelerY = spelerY - 5;
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    spelerY = spelerY + 5;
+  }
+
+
+
   // vijand
-  if (keyIsDown(87) ) {
-     vijandX = vijandX +5;
-   } 
-  
-  if (keyIsDown(65)){
-     vijandX = vijandX -5;
-   } 
-
-  if (keyIsDown(83)){
-     vijandY = vijandY -5;
-   } 
-  
-if (keyIsDown(68)){
-     vijandY = vijandY +5;
-   } 
-
- 
 
   var speed = 2.5
 
-  if(vijandX < spelerX) {
+  if (vijandX < spelerX) {
     vijandX += speed;
   }
 
@@ -89,8 +74,8 @@ if (keyIsDown(68)){
   else if (vijandY > spelerY) {
     vijandY -= speed;
   }
-    
-    // kogel
+
+  // kogel
 }
 
 /**
@@ -100,13 +85,14 @@ if (keyIsDown(68)){
  */
 var verwerkBotsing = function() {
   // botsing speler tegen vijand
-if (spelerX - vijandX < 50 &&
-   spelerX - vijandX >-50 &&
-   spelerY - vijandY < 50 &&
-   spelerY - vijandY > -50) {
-  console.log("Botsing");
-}
-  
+  if (spelerX - vijandX < 50 &&
+    spelerX - vijandX > -50 &&
+    spelerY - vijandY < 50 &&
+    spelerY - vijandY > -50) {
+    console.log("Botsing"); 
+    health = health -1;
+  }
+
   // botsing kogel tegen vijand
 
   // update punten en health
@@ -161,16 +147,37 @@ function draw() {
   if (spelStatus === SPELEN) {
     beweegAlles();
     background('blue')
-
-   
-    
     verwerkBotsing();
     tekenAlles();
+    
     if (health <= 0) {
       spelStatus = GAMEOVER;
     }
   }
   if (spelStatus === GAMEOVER) {
     // teken game-over scherm
+    console.log("game over");
+    textSize(50);
+    fill("white");
+    text("GAME OVER :( Druk op spatie!", 100, 100);
+    if (keyIsDown(32)) { // spatie
+      spelStatus = UITLEG;
+    }
+  }
+
+  if (spelStatus === UITLEG) {
+    // teken uitleg scherm
+    
+    console.log("uitleg");
+    textSize(50);
+    fill("blue");
+    rect(0, 0, 1280, 720);
+    fill("white");
+    text("UITLEG: Druk op spatie voor start =D", 200, 150);
+    if(keyIsDown(13)) {
+      spelStatus = SPELEN;
+    }
+   
   }
 }
+          
