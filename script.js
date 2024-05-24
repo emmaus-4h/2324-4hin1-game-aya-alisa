@@ -17,7 +17,7 @@
 /* ********************************************* */
 const SPELEN = 1;
 const GAMEOVER = 2;
-const UITLEG = 3;
+const UITLEG = 8;
 var spelStatus = SPELEN;
 
 var spelerX = 600; // x-positie van speler
@@ -35,6 +35,8 @@ var vijandY = 500;
 /**
  * Updatet globale variabelen met posities van speler, vijanden en kogels
  */
+
+
 var beweegAlles = function() {
   // speler
   if (keyIsDown(RIGHT_ARROW)) {
@@ -156,6 +158,7 @@ function draw() {
   }
   if (spelStatus === GAMEOVER) {
     // teken game-over scherm
+    health = 100
     console.log("game over");
     textSize(50);
     fill("white");
@@ -173,11 +176,10 @@ function draw() {
     fill("blue");
     rect(0, 0, 1280, 720);
     fill("white");
-    text("UITLEG: Druk op spatie voor start =D", 200, 150);
+    text("UITLEG: Druk op enter voor start =D", 200, 150);
     if(keyIsDown(13)) {
       spelStatus = SPELEN;
     }
    
-  }
-}
+  }}
           
