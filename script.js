@@ -17,7 +17,7 @@
 /* ********************************************* */
 const SPELEN = 1;
 const GAMEOVER = 2;
-const UITLEG = 8;
+const UITLEG = 3;
 var spelStatus = SPELEN;
 
 var spelerX = 600; // x-positie van speler
@@ -35,8 +35,6 @@ var vijandY = 500;
 /**
  * Updatet globale variabelen met posities van speler, vijanden en kogels
  */
-
-
 var beweegAlles = function() {
   // speler
   if (keyIsDown(RIGHT_ARROW)) {
@@ -93,6 +91,7 @@ var verwerkBotsing = function() {
     spelerY - vijandY > -50) {
     console.log("Botsing"); 
     health = health -1;
+    return true;
   }
 
   // botsing kogel tegen vijand
@@ -116,8 +115,10 @@ var tekenAlles = function() {
   // speler
   fill("yellow");
   ellipse(spelerX - 25, spelerY - 25, 50, 50);
-  fill("black");
+   fill("black");
   ellipse(spelerX - 30, spelerY - 32, 10, 10);
+  
+  
 
   // punten en health
 
@@ -158,7 +159,6 @@ function draw() {
   }
   if (spelStatus === GAMEOVER) {
     // teken game-over scherm
-    health = 100
     console.log("game over");
     textSize(50);
     fill("white");
@@ -179,7 +179,10 @@ function draw() {
     text("UITLEG: Druk op enter voor start =D", 200, 150);
     if(keyIsDown(13)) {
       spelStatus = SPELEN;
+      spelerX = 100;
+      health = 100;
     }
    
-  }}
+  }
+}
           
