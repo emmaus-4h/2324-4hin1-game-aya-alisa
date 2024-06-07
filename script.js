@@ -18,6 +18,7 @@
 const SPELEN = 1;
 const GAMEOVER = 2;
 const UITLEG = 3;
+const GEWONNEN = 4;
 var spelStatus = SPELEN;
 
 var spelerX = 600; // x-positie van speler
@@ -26,7 +27,13 @@ var health = 100;  // health van speler
 
 var vijandX = 600;
 var vijandY = 500;
+var healthV = 100;
 
+var kogelaX = 100;
+var kogelaY = 100;
+var kogelbX = 100;
+var kogelbY = 100;
+var kogelVliegt = false;
 
 /* ********************************************* */
 /* functies die je gebruikt in je game           */
@@ -76,7 +83,19 @@ var beweegAlles = function() {
   }
 
   // kogel
-}
+  if (kogelVliegt === false &&
+    keyIsDown(32)) {
+    kogelVliegt = true;
+    kogelX = spelerX;
+    kogelY = spelerY;
+  }
+  if (kogelVliegt === true)
+    kogelY = kogelY - 1;
+  if (kogelVliegt === true && kogelY < 0) {
+    kogelvliegt = false;
+  }
+};
+
 
 /**
  * Checkt botsingen
@@ -89,13 +108,20 @@ var verwerkBotsing = function() {
     spelerX - vijandX > -50 &&
     spelerY - vijandY < 50 &&
     spelerY - vijandY > -50) {
-    console.log("Botsing"); 
-    health = health -1;
+    console.log("Botsing");
+    health = health - 1;
     return true;
   }
 
   // botsing kogel tegen vijand
-
+  if (kogelX - vijandX < 50 &&
+    kogelX - vijandX > -50 &&
+    kogelY - vijandY < 50 &&
+    kogelY - vijandY > -50) {
+    console.log("Raak");
+    healthV = healthV - 100;
+    return true;
+  }
   // update punten en health
 
 };
@@ -111,14 +137,16 @@ var tekenAlles = function() {
   ellipse(vijandX - 25, vijandY - 25, 50, 50);
 
   // kogel
+  fill('red');
+  ellipse(kogelX, kogelY, 20, 20);
 
   // speler
   fill("yellow");
   ellipse(spelerX - 25, spelerY - 25, 50, 50);
-   fill("black");
+  fill("black");
   ellipse(spelerX - 30, spelerY - 32, 10, 10);
-  
-  
+
+
 
   // punten en health
 
@@ -138,7 +166,7 @@ function setup() {
   createCanvas(1280, 720);
 
   // Kleur de achtergrond blauw, zodat je het kunt zien
-  background('blue');
+  background('black');
 }
 
 /**
@@ -149,19 +177,36 @@ function setup() {
 function draw() {
   if (spelStatus === SPELEN) {
     beweegAlles();
-    background('blue')
+    background('black')
     verwerkBotsing();
     tekenAlles();
-    
+
+
     if (health <= 0) {
       spelStatus = GAMEOVER;
     }
+
+
+    if (healthV <= 0) {
+      spelStatus = GEWONNEN;
+    }
   }
+
+  if (spelStatus === GEWONNEN) {
+    console.log("Raak");
+    textSize(100);
+    fill("white");
+    text("YOU WON! Click space to play", 100, 100);
+    if (keyIsDown(32)) {
+      spelStatus = UITLEG;
+    }
+  }
+
   if (spelStatus === GAMEOVER) {
     // teken game-over scherm
     console.log("game over");
     textSize(50);
-    fill("white");
+    fill("red");
     text("GAME OVER :( Druk op spatie!", 100, 100);
     if (keyIsDown(32)) { // spatie
       spelStatus = UITLEG;
@@ -170,19 +215,18 @@ function draw() {
 
   if (spelStatus === UITLEG) {
     // teken uitleg scherm
-    
+
     console.log("uitleg");
     textSize(50);
     fill("blue");
     rect(0, 0, 1280, 720);
     fill("white");
     text("UITLEG: Druk op enter voor start =D", 200, 150);
-    if(keyIsDown(13)) {
+    if (keyIsDown(13)) {
       spelStatus = SPELEN;
       spelerX = 100;
       health = 100;
     }
-   
+
   }
 }
-          
